@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libutil
+Description: Library of utility modules
+URL: http://github.com/bitbckt/libutil/archive/libutil-@VERSION@.tar.xz
+Version: @VERSION@
+Libs: -L${libdir} -lutil
+Libs.private:
+Cflags: -I${includedir}

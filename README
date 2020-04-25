@@ -1,0 +1,69 @@
+                              libutil 0
+                     (Library of utility modules)
+
+            Written by Brandon Mitchell <brandon@thewholedoubt.com>
+
+DESCRIPTION
+
+  This package serves as a repository of utility modules for building
+  systems in C, intended for distribution on POSIX operating
+  systems. See the THANKS section below for major sources of
+  inspiration.
+
+REQUIREMENTS
+
+  Everything requires a C compiler to build and expects an ISO C89 or
+  later C compiler and libraries.
+
+  To bootstrap from a Git checkout, or if you change the Automake files
+  and need to regenerate Makefile.in, you will need Automake 1.11 or
+  later.  For bootstrap or if you change configure.ac or any of the m4
+  files it includes and need to regenerate configure or config.h.in, you
+  will need Autoconf 2.60 or later.
+
+BUILDING
+
+  You can build libutil with:
+
+      ./configure
+      make
+
+TESTING
+
+  libutil comes with a test suite, which you can run after building with:
+
+      make check
+
+  If a test fails, you can run a single test with verbose output via:
+
+      tests/runtests -o <name-of-test>
+
+  Do this instead of running the test program directly since it will
+  ensure that necessary environment variables are set up.
+
+USING THIS CODE
+
+  While there is an install target, it's present only because Automake
+  provides it automatically.  Its use is not recommended.  Instead, the
+  code in this package is intended to be copied into your package and
+  serves only as a template.
+
+SOURCE REPOSITORY
+
+  libutil is maintained using Git.  You can access the current source
+  by cloning the repository at:
+
+      https://github.com/bitbckt/libutil.git
+
+  or view the repository via the web at:
+
+      https://github.com/bitbckt/libutil
+
+  Please send any bug reports, patches, or questions to brandon@thewholedoubt.com.
+
+THANKS
+
+  Russ Albery's Coding Style (http://www.eyrie.org/~eagle/notes/style/)
+
+    Russ' documentation style and Autotools suggestions, and C TAP
+    harness are present here.

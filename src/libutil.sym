@@ -1,0 +1,4 @@
+LIBUTIL_0 {
+local:
+        *;
+};
