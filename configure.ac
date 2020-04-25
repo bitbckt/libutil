@@ -20,6 +20,13 @@ AC_PREFIX_DEFAULT([/usr])
 AC_PROG_SED
 AC_PROG_MKDIR_P
 
+AC_ARG_ENABLE([panic],
+        AS_HELP_STRING([--enable-panic], [panic when assert fails @<:@default=disabled@:>@]),
+        [], [enable_panic=no])
+AS_IF([test "x$enable_panic" = "xyes"], [
+        AC_DEFINE(ASSERT_PANIC, [1], [Assert panics.])
+])
+
 my_CFLAGS="-pedantic -Wall -Wextra \
 -Wmissing-declarations -Wmissing-prototypes \
 -Wnested-externs -Wsign-compare \
@@ -47,4 +54,6 @@ AC_MSG_RESULT([
         compiler:               ${CC}
         cflags:                 ${CFLAGS}
         ldflags:                ${LDFLAGS}
+
+        panic:                  ${enable_panic}
 ])

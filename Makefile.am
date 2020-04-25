@@ -47,7 +47,10 @@ LIBUTIL_AGE=0
 pkginclude_HEADERS =
 lib_LTLIBRARIES = src/libutil.la
 
-src_libutil_la_SOURCES =
+src_libutil_la_SOURCES =\
+	src/assert.h \
+	src/assert.c \
+	src/util-private.h
 
 EXTRA_DIST += src/libutil.sym
 

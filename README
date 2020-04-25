@@ -28,6 +28,8 @@ BUILDING
       ./configure
       make
 
+  Pass --enable-panic to configure to panic when an assert fails.
+
 TESTING
 
   libutil comes with a test suite, which you can run after building with:
