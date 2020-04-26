@@ -31,6 +31,13 @@ AS_IF([test "x$enable_debug" = "xyes"], [
         AC_DEFINE(ENABLE_DEBUG, [1], [Debug messages.])
 ])
 
+AC_ARG_ENABLE([asserts],
+        AS_HELP_STRING([--enable-asserts], [enable asserts @<:@default=disabled@:>@]),
+        [], [enable_asserts=no])
+AS_IF([test "x$enable_asserts" = "xyes"], [
+        AC_DEFINE(ENABLE_ASSERTS, [1], [Asserts.])
+])
+
 AC_ARG_ENABLE([panic],
         AS_HELP_STRING([--enable-panic], [panic when assert fails @<:@default=disabled@:>@]),
         [], [enable_panic=no])
@@ -72,5 +79,6 @@ AC_MSG_RESULT([
         ldflags:                ${LDFLAGS}
 
         debug:                  ${enable_debug}
+        asserts:                ${enable_asserts}
         panic:                  ${enable_panic}
 ])
