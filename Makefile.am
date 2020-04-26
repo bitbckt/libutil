@@ -50,7 +50,9 @@ lib_LTLIBRARIES = src/libutil.la
 src_libutil_la_SOURCES =\
 	src/assert.h \
 	src/assert.c \
-	src/util-private.h
+	src/util-private.h \
+	src/xmalloc.h \
+	src/xmalloc.c
 
 EXTRA_DIST += src/libutil.sym
 
