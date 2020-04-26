@@ -1,4 +1,2 @@
-_xfree: debug log
 _xmalloc: log if p == NULL
 _xrealloc: log if p == NULL
-assert: debug log

@@ -8,7 +8,7 @@ void *_xcalloc(size_t nmemb, size_t size, const char *name, int line);
 void *_xmalloc(size_t size, const char *name, int line);
 void *_xrealloc(void *ptr, size_t size, const char *name, int line);
 void *_xzalloc(size_t size, const char *name, int line);
-void _xfree(void *ptr, const char *file, int line);
+void _xfree(void *ptr, const char *name, int line);
 
 #define xcalloc(_n, _s)                         \
     _xcalloc((size_t)(_n), (size_t)(_s), __FILE, __LINE__)

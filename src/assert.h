@@ -4,7 +4,7 @@
 
 BEGIN_DECLS
 
-void _assert(const char *cond, const char *file, int line, int panic);
+void _assert(const char *cond, const char *file, int line, bool panic);
 void stacktrace(int skip);
 
 /*
@@ -13,11 +13,11 @@ void stacktrace(int skip);
  */
 #ifdef ASSERT_PANIC
 
-#define ASSERT(_x) do {                      \
-    if (!(_x)) {                             \
-        _assert(#_x, __FILE__, __LINE__, 1);  \
-    }                                        \
-} while (0)
+#define ASSERT(_x) do {                                 \
+        if (!(_x)) {                                    \
+            _assert(#_x, __FILE__, __LINE__, true);     \
+        }                                               \
+    } while (0)
 
 #define NOT_REACHED() ASSERT(0)
 

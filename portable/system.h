@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #if HAVE_UNISTD_H
 #    include <unistd.h>
 #endif
@@ -47,6 +48,10 @@ typedef ptrdiff_t ssize_t;
 #    endif
 #endif
 
+#if !HAVE_DECL_SNPRINTF
+extern int snprintf(char *, size_t, const char *, ...)
+    __attribute__((__format__(printf, 3, 4)));
+#endif
 #if !HAVE_DECL_VSNPRINTF
 extern int vsnprintf(char *, size_t, const char *, va_list)
     __attribute__((__format__(printf, 3, 0)));

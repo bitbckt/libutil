@@ -1,12 +1,106 @@
 #include <errno.h>
+#include <fcntl.h>
+#include <portable/stdbool.h>
 #include <portable/system.h>
+#include <sys/time.h>
+#include <time.h>
 
 #include "log.h"
 #include "str.h"
+#include "util-private.h"
 #include "xwrite.h"
 
 /* number of errors during logging */
 static uint32_t log_nerror = 0;
+
+static struct logger {
+    char *name;  /* log file name */
+    int  level;  /* log level */
+    int  fd;     /* log file descriptor */
+} logger;
+
+int
+log_init(int level, char *filename)
+{
+    struct logger *l = &logger;
+
+    l->level = MAX(LOG_EMERG, MIN(level, LOG_DEBUG));
+    l->name = filename;
+    if (filename == NULL || !strlen(filename)) {
+        l->fd = STDERR_FILENO;
+    } else {
+        l->fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0644);
+        if (l->fd < 0) {
+            log_stderr("opening log file '%s' failed: %s", filename,
+                       strerror(errno));
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
+bool
+log_loggable(int level)
+{
+    struct logger *l = &logger;
+
+    if (level > l->level) {
+        return true;
+    }
+
+    return false;
+}
+
+void
+log_deinit(void)
+{
+    struct logger *l = &logger;
+
+    if (l->fd < 0 || l->fd == STDERR_FILENO) {
+        return;
+    }
+
+    close(l->fd);
+}
+
+void
+_log(const char *file, int line, const char *fmt, ...)
+{
+    struct logger *l = &logger;
+    int len, size, errno_save;
+    char buf[LOG_MAX_LEN];
+    va_list args;
+    ssize_t n;
+    struct timeval tv;
+
+    if (l->fd < 0) {
+        return;
+    }
+
+    errno_save = errno;
+    len = 0;            /* length of output buffer */
+    size = LOG_MAX_LEN; /* size of output buffer */
+
+    gettimeofday(&tv, NULL);
+    buf[len++] = '[';
+    len += strftime(buf + len, size - len, "%Y-%m-%d %H:%M:%S.", localtime(&tv.tv_sec));
+    len += scnprintf(buf + len, size - len, "%03ld", tv.tv_usec/1000);
+    len += scnprintf(buf + len, size - len, "] %s:%d ", file, line);
+
+    va_start(args, fmt);
+    len += vscnprintf(buf + len, size - len, fmt, args);
+    va_end(args);
+
+    buf[len++] = '\n';
+
+    n = xwrite(l->fd, buf, len);
+    if (n < 0) {
+        log_nerror++;
+    }
+
+    errno = errno_save;
+}
 
 void
 _log_stderr(const char *fmt, ...)

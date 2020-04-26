@@ -24,6 +24,13 @@ AC_TYPE_UINT32_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 
+AC_ARG_ENABLE([debug],
+        AS_HELP_STRING([--enable-debug], [enable debug messages @<:@default=disabled@:>@]),
+        [], [enable_debug=no])
+AS_IF([test "x$enable_debug" = "xyes"], [
+        AC_DEFINE(ENABLE_DEBUG, [1], [Debug messages.])
+])
+
 AC_ARG_ENABLE([panic],
         AS_HELP_STRING([--enable-panic], [panic when assert fails @<:@default=disabled@:>@]),
         [], [enable_panic=no])
@@ -39,11 +46,12 @@ my_CFLAGS="-pedantic -Wall -Wextra \
 AC_SUBST([my_CFLAGS])
 
 AC_HEADER_STDBOOL
-AC_CHECK_HEADERS([errno.h stdarg.h stddef.h stdio.h stdlib.h string.h unistd.h])
+AC_CHECK_HEADERS([errno.h stdarg.h stddef.h stdio.h stdlib.h string.h sys/types.h unistd.h])
 AC_CHECK_HEADERS([inttypes.h stdint.h])
+AC_CHECK_HEADERS([sys/time.h time.h])
 AC_CHECK_HEADERS([execinfo.h], [
         AC_DEFINE(HAVE_BACKTRACE, [1], [backtraces available])], {})
-AC_CHECK_DECLS([vsnprintf])
+AC_CHECK_DECLS([snprintf vsnprintf])
 AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_FILES([
         Makefile
@@ -63,5 +71,6 @@ AC_MSG_RESULT([
         cflags:                 ${CFLAGS}
         ldflags:                ${LDFLAGS}
 
+        debug:                  ${enable_debug}
         panic:                  ${enable_panic}
 ])

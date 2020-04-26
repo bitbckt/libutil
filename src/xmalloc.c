@@ -1,6 +1,7 @@
 #include <portable/system.h>
 
 #include "assert.h"
+#include "log.h"
 #include "util-private.h"
 #include "xmalloc.h"
 
@@ -54,12 +55,14 @@ _xzalloc(size_t size, const char *name, int line)
 }
 
 void
-_xfree(void *ptr, const char *file, int line)
+_xfree(void *ptr, const char *name, int line)
 {
-    UNUSED(file);
+#if !defined(ENABLE_DEBUG)
+    UNUSED(name);
     UNUSED(line);
+#endif
 
     ASSERT(ptr != NULL);
-    /* TODO: debug log */
+    log_debug(LOG_DEBUG, "free(%p) @ %s:%d", ptr, name, line);
     free(ptr);
 }

@@ -6,13 +6,9 @@
 #include "xmalloc.h"
 
 void
-_assert(const char *cond, const char *file, int line, int panic)
+_assert(const char *cond, const char *file, int line, bool panic)
 {
-    /* TODO: debug log */
-    UNUSED(cond);
-    UNUSED(file);
-    UNUSED(line);
-    
+    log_error("assert '%s' failed @ (%s, %d)", cond, file, line);
     if (panic) {
         stacktrace(1);
         abort();
