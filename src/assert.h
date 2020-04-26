@@ -5,6 +5,7 @@
 BEGIN_DECLS
 
 void _assert(const char *cond, const char *file, int line, int panic);
+void stacktrace(int skip);
 
 /*
  * Wrappers for defining custom assert based on whether the macro
