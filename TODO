@@ -1,2 +1,0 @@
-_xmalloc: log if p == NULL
-_xrealloc: log if p == NULL

@@ -12,17 +12,19 @@ _xcalloc(size_t nmemb, size_t size, const char *name, int line)
 }
 
 void *
-_xmalloc(size_t size, const char *file, int line)
+_xmalloc(size_t size, const char *name, int line)
 {
     void *p;
 
-    UNUSED(file);
-    UNUSED(line);
-
     ASSERT(size != 0);
 
-    /* TODO: log if p == NULL */
     p = malloc(size);
+    if (p == NULL) {
+        log_error("malloc(%zu) failed @ %s:%d", size, name, line);
+    } else {
+        log_debug(LOG_DEBUG, "malloc(%zu) at %p @ %s:%d", size, p, name, line);
+    }
+
     return p;
 }
 
@@ -31,13 +33,15 @@ _xrealloc(void *ptr, size_t size, const char *name, int line)
 {
     void *p;
 
-    UNUSED(name);
-    UNUSED(line);
-
     ASSERT(size != 0);
 
-    /* TODO: log if p == NULL */
     p = realloc(ptr, size);
+    if (p == NULL) {
+        log_error("realloc(%zu) failed @ %s:%d", size, name, line);
+    } else {
+        log_debug(LOG_DEBUG, "realloc(%zu) at %p @ %s:%d", size, p, name, line);
+    }
+
     return p;
 }
 
