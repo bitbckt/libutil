@@ -10,6 +10,9 @@
 #include "util-private.h"
 #include "xwrite.h"
 
+/* maximum acceptable length of a log filename */
+#define FILENAME_MAX_LEN 255
+
 /* number of errors during logging */
 static uint32_t log_nerror = 0;
 
@@ -26,7 +29,7 @@ log_init(int level, char *filename)
 
     l->level = MAX(LOG_EMERG, MIN(level, LOG_DEBUG));
     l->name = filename;
-    if (filename == NULL || !strlen(filename)) {
+    if (filename == NULL || !strnlen(filename, FILENAME_MAX_LEN)) {
         l->fd = STDERR_FILENO;
     } else {
         l->fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0644);
