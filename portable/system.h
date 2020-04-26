@@ -34,3 +34,8 @@ typedef ptrdiff_t ssize_t;
 #    define STDOUT_FILENO 1
 #    define STDERR_FILENO 2
 #endif
+
+#if !HAVE_DECL_VSNPRINTF
+extern int vsnprintf(char *, size_t, const char *, va_list)
+    __attribute__((__format__(printf, 3, 0)));
+#endif

@@ -43,7 +43,7 @@ AC_CHECK_HEADERS([errno.h stdarg.h stddef.h stdio.h stdlib.h string.h unistd.h])
 AC_CHECK_HEADERS([inttypes.h stdint.h])
 AC_CHECK_HEADERS([execinfo.h], [
         AC_DEFINE(HAVE_BACKTRACE, [1], [backtraces available])], {})
-
+AC_CHECK_DECLS([vsnprintf])
 AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_FILES([
         Makefile
