@@ -28,6 +28,10 @@ BUILDING
       ./configure
       make
 
+  Pass --enable-debug to configure to log debug messages.
+
+  Pass --enable-asserts to configure to enable runtime assertions.
+
   Pass --enable-panic to configure to panic when an assert fails.
 
 TESTING
