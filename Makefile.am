@@ -89,6 +89,11 @@ nodist_pkgconfig_DATA = src/libutil.pc
 EXTRA_DIST += src/libutil.pc.in
 CLEANFILES += src/libutil.pc
 
+# Apply style rules using clang-format
+style:
+	find src include -name '*.[ch]' -print | xargs ${PATH_CLANG_FORMAT} -style=file -i
+	find test -name '*-t.[ch]' -print | xargs ${PATH_CLANG_FORMAT} -style=file -i
+
 # Everything below is for the test suite
 check_PROGRAMS =\
 	test/runtests \

@@ -24,7 +24,7 @@ int
 _scnprintf(char *buf, size_t size, const char *fmt, ...)
 {
     va_list args;
-    int n;
+    int     n;
 
     va_start(args, fmt);
     n = _vscnprintf(buf, size, fmt, args);
@@ -54,7 +54,7 @@ _vscnprintf(char *buf, size_t size, const char *fmt, va_list args)
         return 0;
     }
 
-    if (n < (int) size) {
+    if (n < (int)size) {
         return n;
     }
 

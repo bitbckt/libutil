@@ -48,7 +48,7 @@ struct dbuf *dbuf_init(size_t size);
  *
  * If no bytes were readable, byte is not modified.
  */
-bool dbuf_get(struct dbuf* dbuf, uint8_t *byte);
+bool dbuf_get(struct dbuf *dbuf, uint8_t *byte);
 
 /**
  * Puts a byte in dbuf. Returns true if the byte was written, false if

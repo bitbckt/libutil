@@ -28,7 +28,7 @@ static void
 test_basic(void)
 {
     struct dbuf *dbuf;
-    uint8_t byte = 'a';
+    uint8_t      byte = 'a';
 
     dbuf = dbuf_init(1);
 
@@ -46,7 +46,7 @@ static void
 test_capacity(void)
 {
     struct dbuf *dbuf;
-    uint8_t byte = 'a';
+    uint8_t      byte = 'a';
 
     dbuf = dbuf_init(26);
 
@@ -76,7 +76,7 @@ static void
 test_readable(void)
 {
     struct dbuf *dbuf;
-    uint8_t byte = 'a';
+    uint8_t      byte = 'a';
 
     dbuf = dbuf_init(1);
 

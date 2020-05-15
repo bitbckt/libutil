@@ -1,0 +1,63 @@
+# Configuration for clang-format automated reformatting.  -*- yaml -*-
+---
+BasedOnStyle: LLVM
+IndentWidth: 4
+---
+Language: Cpp
+
+ColumnLimit: 79
+
+# vertical alignment is aethetically pleasing
+AlignConsecutiveMacros: true
+AlignConsecutiveDeclarations: true
+AlignTrailingComments: true
+AlignEscapedNewlines: Left
+
+# single line statements make diffs more difficult to parse than
+# necessary
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+# break controls
+AlwaysBreakAfterReturnType: AllDefinitions
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeBraces: WebKit
+
+# sort include groups, then regroup with system headers first.
+# also separates the "main" header from other includes
+SortIncludes: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '<[[:alnum:]./]+>'
+    Priority: -1
+  - Regex: '.*'
+
+# indent preprocessor directives according to their nesting level
+IndentPPDirectives: AfterHash
+
+# don't allow function names to indent beyond column 0
+IndentWrappedFunctionNames: false
+
+# one line is plenty of vertical breathing room
+MaxEmptyLinesToKeep: 1
+
+# match pointer location between definition and use
+DerivePointerAlignment: false
+PointerAlignment: Right
+
+# horizontal breathing room controls
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: true
+SpaceInEmptyParentheses: false
+SpacesInCStyleCastParentheses: false
+SpacesInConditionalStatement: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+---

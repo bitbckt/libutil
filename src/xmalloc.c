@@ -18,10 +18,11 @@
 
 #include <portable/system.h>
 
+#include "xmalloc.h"
+
 #include "assert.h"
 #include "log.h"
 #include "util-private.h"
-#include "xmalloc.h"
 
 void *
 _xcalloc(size_t nmemb, size_t size, const char *name, int line)
@@ -57,7 +58,8 @@ _xrealloc(void *ptr, size_t size, const char *name, int line)
     if (p == NULL) {
         log_error("realloc(%zu) failed @ %s:%d", size, name, line);
     } else {
-        log_debug(LOG_DEBUG, "realloc(%zu) at %p @ %s:%d", size, p, name, line);
+        log_debug(LOG_DEBUG, "realloc(%zu) at %p @ %s:%d", size, p, name,
+                  line);
     }
 
     return p;

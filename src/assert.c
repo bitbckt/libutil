@@ -19,6 +19,7 @@
 #include <portable/system.h>
 
 #include "assert.h"
+
 #include "log.h"
 #include "util-private.h"
 #include "xmalloc.h"
@@ -37,9 +38,9 @@ void
 stacktrace(int skip)
 {
 #ifdef HAVE_BACKTRACE
-    void *stack[64];
+    void * stack[64];
     char **symbols;
-    int size, i, j;
+    int    size, i, j;
 
     size = backtrace(stack, 64);
     symbols = backtrace_symbols(stack, size);

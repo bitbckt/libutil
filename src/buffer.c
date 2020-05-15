@@ -23,7 +23,7 @@
 #include "xmalloc.h"
 
 #ifdef ASSERTS
-#   define DBUF_MAGIC 0xdeadbeef
+#    define DBUF_MAGIC 0xdeadbeef
 #endif
 
 /**
@@ -83,7 +83,7 @@ UTIL_EXPORT struct dbuf *
 dbuf_init(size_t size)
 {
     struct dbuf *dbuf;
-    uint8_t *buf;
+    uint8_t *    buf;
 
     buf = xzalloc(sizeof(struct dbuf) + size * 2);
     if (buf == NULL) {
@@ -107,13 +107,12 @@ dbuf_init(size_t size)
 }
 
 UTIL_EXPORT bool
-dbuf_put(struct dbuf* dbuf, uint8_t byte)
+dbuf_put(struct dbuf *dbuf, uint8_t byte)
 {
     ASSERT(dbuf->magic == DBUF_MAGIC);
 
     /* out of writable capacity, wait for reader */
-    if (dbuf->last == dbuf->read ||
-        dbuf->last == (uint8_t *)dbuf) {
+    if (dbuf->last == dbuf->read || dbuf->last == (uint8_t *)dbuf) {
         return false;
     }
 
@@ -137,7 +136,7 @@ _dbuf_swap(struct dbuf *dbuf)
 }
 
 UTIL_EXPORT bool
-dbuf_get(struct dbuf* dbuf, uint8_t *byte)
+dbuf_get(struct dbuf *dbuf, uint8_t *byte)
 {
     ASSERT(dbuf->magic == DBUF_MAGIC);
 

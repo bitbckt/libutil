@@ -32,23 +32,25 @@ void stacktrace(int skip);
  */
 #ifdef ASSERTS
 #    ifdef ASSERT_PANIC
-#        define ASSERT(_x) do {                                     \
-                if (!(_x)) {                                        \
-                    _assert(#_x, __FILE__, __LINE__, true);         \
-                }                                                   \
+#        define ASSERT(_x)                                  \
+            do {                                            \
+                if (!(_x)) {                                \
+                    _assert(#_x, __FILE__, __LINE__, true); \
+                }                                           \
             } while (0)
 
 #        define NOT_REACHED() ASSERT(0)
 #    else /* !ASSERT_PANIC */
-#        define ASSERT(_x) do {                                  \
-                if (!(_x)) {                                     \
-                    _assert(#_x, __FILE__, __LINE__, false);     \
-                }                                                \
+#        define ASSERT(_x)                                   \
+            do {                                             \
+                if (!(_x)) {                                 \
+                    _assert(#_x, __FILE__, __LINE__, false); \
+                }                                            \
             } while (0)
 
 #        define NOT_REACHED() ASSERT(0)
 #    endif /* ASSERT_PANIC */
-#else /* !ASSERTS */
+#else      /* !ASSERTS */
 #    define ASSERT(_x)
 #    define NOT_REACHED()
 #endif /* ASSERTS */

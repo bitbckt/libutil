@@ -34,7 +34,7 @@ BEGIN_DECLS
 
 #define LOG_MAX_LEN 256 /* max length of log messages */
 
-int log_init(int level, char *filename);
+int  log_init(int level, char *filename);
 bool log_loggable(int level);
 void log_deinit(void);
 void _log(const char *file, int line, const char *fmt, ...);
@@ -42,26 +42,29 @@ void _log_stderr(const char *fmt, ...);
 
 #ifdef ENABLE_DEBUG
 
-#define log_debug(_level, ...) do {                                     \
-        if (log_loggable(_level) != 0) {                                \
-            _log(__FILE__, __LINE__, __VA_ARGS__);                      \
-        }                                                               \
-    } while (0)
+#    define log_debug(_level, ...)                     \
+        do {                                           \
+            if (log_loggable(_level) != 0) {           \
+                _log(__FILE__, __LINE__, __VA_ARGS__); \
+            }                                          \
+        } while (0)
 
 #else /* !ENABLE_DEBUG */
 
-#define log_debug(_level, ...)
+#    define log_debug(_level, ...)
 
 #endif /* ENABLE_DEBUG */
 
-#define log_error(...) do {                                             \
-        if (log_loggable(LOG_ERR) != 0) {                               \
-            _log(__FILE__, __LINE__, __VA_ARGS__);                      \
-        }                                                               \
+#define log_error(...)                             \
+    do {                                           \
+        if (log_loggable(LOG_ERR) != 0) {          \
+            _log(__FILE__, __LINE__, __VA_ARGS__); \
+        }                                          \
     } while (0)
 
-#define log_stderr(...) do {                                            \
-        _log_stderr(__VA_ARGS__);                                       \
+#define log_stderr(...)           \
+    do {                          \
+        _log_stderr(__VA_ARGS__); \
     } while (0)
 
 END_DECLS

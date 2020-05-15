@@ -24,8 +24,8 @@
 ssize_t
 xwrite(int fd, const void *buffer, size_t size)
 {
-    size_t total;
-    ssize_t status;
+    size_t       total;
+    ssize_t      status;
     unsigned int count = 0;
 
     if (size == 0) {
@@ -38,7 +38,7 @@ xwrite(int fd, const void *buffer, size_t size)
             break;
         }
 
-        status = write(fd, (const char *) buffer + total, size - total);
+        status = write(fd, (const char *)buffer + total, size - total);
 
         if (status > 0) {
             count = 0;

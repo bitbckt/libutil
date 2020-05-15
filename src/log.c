@@ -24,6 +24,7 @@
 #include <time.h>
 
 #include "log.h"
+
 #include "str.h"
 #include "util-private.h"
 #include "xwrite.h"
@@ -36,8 +37,8 @@ static uint32_t log_nerror = 0;
 
 static struct logger {
     char *name;  /* log file name */
-    int  level;  /* log level */
-    int  fd;     /* log file descriptor */
+    int   level; /* log level */
+    int   fd;    /* log file descriptor */
 } logger;
 
 int
@@ -89,10 +90,10 @@ void
 _log(const char *file, int line, const char *fmt, ...)
 {
     struct logger *l = &logger;
-    int len, size, errno_save;
-    char buf[LOG_MAX_LEN];
-    va_list args;
-    ssize_t n;
+    int            len, size, errno_save;
+    char           buf[LOG_MAX_LEN];
+    va_list        args;
+    ssize_t        n;
     struct timeval tv;
 
     if (l->fd < 0) {
@@ -105,8 +106,9 @@ _log(const char *file, int line, const char *fmt, ...)
 
     gettimeofday(&tv, NULL);
     buf[len++] = '[';
-    len += strftime(buf + len, size - len, "%Y-%m-%d %H:%M:%S.", localtime(&tv.tv_sec));
-    len += scnprintf(buf + len, size - len, "%03ld", tv.tv_usec/1000);
+    len += strftime(buf + len, size - len, "%Y-%m-%d %H:%M:%S.",
+                    localtime(&tv.tv_sec));
+    len += scnprintf(buf + len, size - len, "%03ld", tv.tv_usec / 1000);
     len += scnprintf(buf + len, size - len, "] %s:%d ", file, line);
 
     va_start(args, fmt);
@@ -126,9 +128,9 @@ _log(const char *file, int line, const char *fmt, ...)
 void
 _log_stderr(const char *fmt, ...)
 {
-    size_t len, size;
-    int errno_save;
-    char buf[4 * LOG_MAX_LEN];
+    size_t  len, size;
+    int     errno_save;
+    char    buf[4 * LOG_MAX_LEN];
     va_list args;
     ssize_t n;
 

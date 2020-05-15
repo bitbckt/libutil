@@ -39,6 +39,9 @@ AC_PROG_MKDIR_P
 AC_ARG_VAR([PATH_VALGRIND], [Path to valgrind for the test suite])
 AC_PATH_PROG([PATH_VALGRIND], [valgrind])
 
+AC_ARG_VAR([PATH_CLANG_FORMAT], [Path to clang-format])
+AC_PATH_PROG([PATH_CLANG_FORMAT], [clang-format])
+
 AC_TYPE_UINT32_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
@@ -98,6 +101,7 @@ AC_MSG_RESULT([
         ldflags:                ${LDFLAGS}
 
         valgrind:               ${PATH_VALGRIND}
+        clang-format:           ${PATH_CLANG_FORMAT}
 
         debug:                  ${enable_debug}
         asserts:                ${enable_asserts}
