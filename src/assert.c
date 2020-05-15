@@ -24,6 +24,9 @@
 #include "util-private.h"
 #include "xmalloc.h"
 
+/* number of stack frames to capture */
+#define BACKTRACE_SIZE 64
+
 void
 _assert(const char *cond, const char *file, int line, bool panic)
 {
@@ -38,11 +41,13 @@ void
 stacktrace(int skip)
 {
 #ifdef HAVE_BACKTRACE
-    void * stack[64];
+    void * stack[BACKTRACE_SIZE];
     char **symbols;
-    int    size, i, j;
+    int    size;
+    int    i;
+    int    j;
 
-    size = backtrace(stack, 64);
+    size = backtrace(stack, BACKTRACE_SIZE);
     symbols = backtrace_symbols(stack, size);
     if (symbols == NULL) {
         return;

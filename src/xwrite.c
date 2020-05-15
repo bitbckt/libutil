@@ -21,6 +21,9 @@
 
 #include "xwrite.h"
 
+/* maximum number of write(2) attempts before giving up */
+#define MAX_ATTEMPTS 10
+
 ssize_t
 xwrite(int fd, const void *buffer, size_t size)
 {
@@ -32,9 +35,11 @@ xwrite(int fd, const void *buffer, size_t size)
         return 0;
     }
 
-    /* Abort the write if we try ten times with no forward progress. */
+    /*
+     * Abort the write if we try MAX_ATTEMPTS times with no forward progress.
+     */
     for (total = 0; total < size; total += status) {
-        if (++count > 10) {
+        if (++count > MAX_ATTEMPTS) {
             break;
         }
 
@@ -54,7 +59,7 @@ xwrite(int fd, const void *buffer, size_t size)
 
     if (total < size) {
         return -1;
-    } else {
-        return (ssize_t)total;
     }
+
+    return (ssize_t)total;
 }

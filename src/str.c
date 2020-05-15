@@ -38,7 +38,11 @@ _vscnprintf(char *buf, size_t size, const char *fmt, va_list args)
 {
     int n;
 
-    n = vsnprintf(buf, size, fmt, args);
+    /*
+     * Call to function 'vsnprintf' is insecure as it does not provide
+     * security checks introduced in the C11 standard.
+     */
+    n = vsnprintf(buf, size, fmt, args); /* NOLINT */
 
     /*
      * The return value is the number of characters which would be written

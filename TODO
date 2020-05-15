@@ -1,0 +1,2 @@
+_vscnprintf: replace call to vsnprintf
+_xzalloc: replace call to memset

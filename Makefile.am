@@ -89,6 +89,15 @@ nodist_pkgconfig_DATA = src/libutil.pc
 EXTRA_DIST += src/libutil.pc.in
 CLEANFILES += src/libutil.pc
 
+# Apply linting rules using clang-tidy
+tidy:
+	${PATH_CLANG_TIDY} ${top_srcdir}/src/*.c \
+		-- \
+		-include ${top_builddir}/config.h \
+		-isystem ${top_srcdir} \
+		-isystem ${top_srcdir}/include \
+		-iquote ${top_srcdir}/src
+
 # Apply style rules using clang-format
 style:
 	find src include -name '*.[ch]' -print | xargs ${PATH_CLANG_FORMAT} -style=file -i

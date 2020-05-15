@@ -72,7 +72,11 @@ _xzalloc(size_t size, const char *name, int line)
 
     p = _xmalloc(size, name, line);
     if (p != NULL) {
-        memset(p, 0, size);
+        /*
+         * Call to memset is insecure as it does not provide security
+         * checks introduced in the C11 standard
+         */
+        memset(p, 0, size); /* NOLINT */
     }
 
     return p;
