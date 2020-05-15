@@ -68,9 +68,9 @@ typedef ptrdiff_t ssize_t;
 
 #if !HAVE_DECL_SNPRINTF
 extern int snprintf(char *, size_t, const char *, ...)
-    __attribute__((__format__(printf, 3, 4)));
+    __attribute__((format(printf, 3, 4)));
 #endif
 #if !HAVE_DECL_VSNPRINTF
 extern int vsnprintf(char *, size_t, const char *, va_list)
-    __attribute__((__format__(printf, 3, 0)));
+    __attribute__((format(printf, 3, 0)));
 #endif

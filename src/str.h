@@ -23,8 +23,10 @@
 
 BEGIN_DECLS
 
-int _scnprintf(char *buf, size_t size, const char *fmt, ...);
-int _vscnprintf(char *buf, size_t size, const char *fmt, va_list args);
+int _scnprintf(char *__restrict buf, size_t size, const char *__restrict fmt,
+               ...) __attribute__((format(printf, 3, 4)));
+int _vscnprintf(char *__restrict buf, size_t size, const char *__restrict fmt,
+                va_list args) __attribute__((format(printf, 3, 0)));
 
 #define scnprintf(_s, _n, ...) \
     _scnprintf((char *)(_s), (size_t)(_n), __VA_ARGS__)

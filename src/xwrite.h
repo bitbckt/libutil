@@ -28,6 +28,6 @@ BEGIN_DECLS
  * writes and EINTR/EAGAIN errors.
  */
 ssize_t xwrite(int fd, const void *buffer, size_t size)
-    __attribute__((__nonnull__));
+    __attribute__((__nonnull__, warn_unused_result));
 
 END_DECLS

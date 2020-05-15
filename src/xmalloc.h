@@ -22,11 +22,15 @@
 
 BEGIN_DECLS
 
-void *_xcalloc(size_t nmemb, size_t size, const char *name, int line);
-void *_xmalloc(size_t size, const char *name, int line);
-void *_xrealloc(void *ptr, size_t size, const char *name, int line);
-void *_xzalloc(size_t size, const char *name, int line);
-void  _xfree(void *ptr, const char *name, int line);
+void *_xcalloc(size_t nmemb, size_t size, const char *name, int line)
+    __attribute__((nonnull, warn_unused_result));
+void *_xmalloc(size_t size, const char *name, int line)
+    __attribute__((nonnull, malloc, warn_unused_result));
+void *_xrealloc(void *ptr, size_t size, const char *name, int line)
+    __attribute__((nonnull, warn_unused_result));
+void *_xzalloc(size_t size, const char *name, int line)
+    __attribute__((nonnull, warn_unused_result));
+void _xfree(void *ptr, const char *name, int line) __attribute__((nonnull));
 
 #define xcalloc(_n, _s) _xcalloc((size_t)(_n), (size_t)(_s), __FILE, __LINE__)
 

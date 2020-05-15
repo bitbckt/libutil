@@ -39,7 +39,7 @@ struct dbuf;
  *
  * NOTE: allocates 2 * size bytes plus administrative overhead.
  */
-struct dbuf *dbuf_init(size_t size);
+struct dbuf *dbuf_init(size_t size) __attribute__((warn_unused_result));
 
 /**
  * Copies the first readable byte of dbuf into byte.
@@ -48,17 +48,17 @@ struct dbuf *dbuf_init(size_t size);
  *
  * If no bytes were readable, byte is not modified.
  */
-bool dbuf_get(struct dbuf *dbuf, uint8_t *byte);
+bool dbuf_get(struct dbuf *dbuf, uint8_t *byte) __attribute__((nonnull));
 
 /**
  * Puts a byte in dbuf. Returns true if the byte was written, false if
  * dbuf has no writable capacity.
  */
-bool dbuf_put(struct dbuf *dbuf, uint8_t byte);
+bool dbuf_put(struct dbuf *dbuf, uint8_t byte) __attribute__((nonnull));
 
 /**
  * Frees memory allocated for dbuf during dbuf_init().
  */
-void dbuf_deinit(struct dbuf *dbuf);
+void dbuf_deinit(struct dbuf *dbuf) __attribute__((nonnull));
 
 END_DECLS

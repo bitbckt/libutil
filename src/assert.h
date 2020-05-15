@@ -23,7 +23,8 @@
 
 BEGIN_DECLS
 
-void _assert(const char *cond, const char *file, int line, bool panic);
+void _assert(const char *cond, const char *file, int line, bool panic)
+    __attribute__((nonnull));
 void stacktrace(int skip);
 
 /*

@@ -37,8 +37,9 @@ BEGIN_DECLS
 int  log_init(int level, char *filename);
 bool log_loggable(int level);
 void log_deinit(void);
-void _log(const char *file, int line, const char *fmt, ...);
-void _log_stderr(const char *fmt, ...);
+void _log(const char *file, int line, const char *fmt, ...)
+    __attribute__((nonnull, format(printf, 3, 4)));
+void _log_stderr(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 
 #ifdef ENABLE_DEBUG
 
