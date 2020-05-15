@@ -43,8 +43,8 @@ typedef enum {
 /**
  * Initializes the logging module.
  *
- * Messages whose level is less than the provided level will be
- * output. All others will be squelched.
+ * Messages whose level is less-than-or-equal-to the provided level
+ * will be output. All others will be squelched.
  *
  * filename is a pathname (see open(2)), which will be created if it
  * does not exist and opened in append-only mode.
