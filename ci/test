@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -eux
+
+export C_TAP_VERBOSE=1
+
+./autogen.sh
+./configure --enable-asserts --enable-panic
+make check
+make tidy

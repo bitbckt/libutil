@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -eux
+
+apt-get update -qq
+apt-get install clang-tidy
