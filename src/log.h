@@ -34,9 +34,39 @@ BEGIN_DECLS
 
 #define LOG_MAX_LEN 256 /* max length of log messages */
 
-int  log_init(int level, char *filename);
+/* maximum acceptable length of a log filename */
+#define LOG_MAX_FILENAME 255
+
+/**
+ * Initializes the logging module.
+ *
+ * Messages whose level is greater than the provided level will be
+ * output. All others will be squelched.
+ *
+ * filename is a pathname (see open(2)), which will be created if it
+ * does not exist and opened in append-only mode.
+ *
+ * If filename is NULL or longer than LOG_MAX_FILENAME, messages will
+ * be written to stderr.
+ *
+ * Returns 0 if the logging module initialized successfully, or -1 if
+ * an error occurred. In case of an error, a log message will be
+ * output to stderr.
+ */
+int log_init(int level, char *filename);
+
+/**
+ * Returns true of the logging module is currently configured to emit
+ * messages at the provided level, false otherwise.
+ */
 bool log_loggable(int level);
+
+/**
+ * Deinitializes the logging module, releasing any resources allocated
+ * during log_init().
+ */
 void log_deinit(void);
+
 void _log(const char *file, int line, const char *fmt, ...)
     __attribute__((nonnull, format(printf, 3, 4)));
 void _log_stderr(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
@@ -45,7 +75,7 @@ void _log_stderr(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 
 #    define log_debug(_level, ...)                     \
         do {                                           \
-            if (log_loggable(_level) != 0) {           \
+            if (log_loggable(_level)) {                \
                 _log(__FILE__, __LINE__, __VA_ARGS__); \
             }                                          \
         } while (0)
@@ -58,7 +88,7 @@ void _log_stderr(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 
 #define log_error(...)                             \
     do {                                           \
-        if (log_loggable(LOG_ERR) != 0) {          \
+        if (log_loggable(LOG_ERR)) {               \
             _log(__FILE__, __LINE__, __VA_ARGS__); \
         }                                          \
     } while (0)

@@ -29,9 +29,6 @@
 #include "util-private.h"
 #include "xwrite.h"
 
-/* maximum acceptable length of a log filename */
-#define FILENAME_MAX_LEN 255
-
 /* log fd mode */
 #define FD_MODE 0644
 
@@ -51,7 +48,7 @@ log_init(int level, char *filename)
 
     l->level = MAX(LOG_EMERG, MIN(level, LOG_DEBUG));
     l->name = filename;
-    if (filename == NULL || !strnlen(filename, FILENAME_MAX_LEN)) {
+    if (filename == NULL || !strnlen(filename, LOG_MAX_FILENAME)) {
         l->fd = STDERR_FILENO;
     } else {
         l->fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, FD_MODE);
