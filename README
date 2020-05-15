@@ -12,7 +12,7 @@ DESCRIPTION
 
 REQUIREMENTS
 
-  Everything requires a C compiler to build and expects an ISO C89 or
+  Everything requires a C compiler to build and expects an ISO C99 or
   later C compiler and libraries.
 
   To bootstrap from a Git checkout, or if you change the Automake files

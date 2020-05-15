@@ -73,7 +73,7 @@ AS_IF([test "x$enable_panic" = "xyes"], [
         AC_DEFINE(ASSERT_PANIC, [1], [Assert panics.])
 ])
 
-my_CFLAGS="-pedantic -Wall -Wextra \
+my_CFLAGS="-std=c99 -pedantic -Wall -Wextra \
 -Wmissing-declarations -Wmissing-prototypes \
 -Wnested-externs -Wsign-compare \
 -Wstrict-prototypes -Wshadow \
