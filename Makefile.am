@@ -60,14 +60,15 @@ LIBUTIL_CURRENT=0
 LIBUTIL_REVISION=0
 LIBUTIL_AGE=0
 
-pkginclude_HEADERS = include/util/buffer.h
+pkginclude_HEADERS =\
+	include/util/buffer.h \
+	include/util/log.h
 lib_LTLIBRARIES = src/libutil.la
 
 src_libutil_la_SOURCES =\
 	src/assert.h \
 	src/assert.c \
 	src/buffer.c \
-	src/log.h \
 	src/log.c \
 	src/str.h \
 	src/str.c \
@@ -110,7 +111,8 @@ endif
 # Everything below is for the test suite
 check_PROGRAMS =\
 	test/runtests \
-	test/dbuf-t
+	test/dbuf-t \
+	test/log-t
 
 test_runtests_CPPFLAGS = -DC_TAP_SOURCE='"$(abs_top_srcdir)/test"' \
 	-DC_TAP_BUILD='"$(abs_top_builddir)/test"'
@@ -119,10 +121,17 @@ test_tap_libtap_a_CPPFLAGS = -I$(abs_top_srcdir)/test
 test_tap_libtap_a_SOURCES =\
 	test/tap/basic.c \
 	test/tap/basic.h \
-	test/tap/macros.h
+	test/tap/macros.h \
+	test/tap/process.c \
+	test/tap/process.h \
+	test/tap/string.c \
+	test/tap/string.h
 
 test_dbuf_t_SOURCES = test/dbuf-t.c
 test_dbuf_t_LDADD = test/tap/libtap.a src/libutil.la
+
+test_log_t_SOURCES = test/log-t.c
+test_log_t_LDADD = test/tap/libtap.a src/libutil.la
 
 check-local: $(check_PROGRAMS)
 	cd test && ./runtests -l $(abs_top_srcdir)/test/TESTS

@@ -23,6 +23,7 @@
 #if HAVE_INTTYPES_H
 #    include <inttypes.h>
 #endif
+#include <limits.h>
 #include <stdarg.h>
 #include <stddef.h>
 #if HAVE_STDINT_H
@@ -39,6 +40,8 @@
 #ifdef HAVE_BACKTRACE
 #    include <execinfo.h>
 #endif
+
+#include <portable/stdbool.h>
 
 #ifndef HAVE_SSIZE_T
 typedef ptrdiff_t ssize_t;

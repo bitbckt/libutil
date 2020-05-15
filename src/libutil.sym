@@ -4,6 +4,12 @@ global:
         dbuf_get;
         dbuf_put;
         dbuf_deinit;
+        log_init;
+        log_loggable;
+        log_deinit;
+        log_stderr;
+        log_stdout;
+        log_write;
 local:
         *;
 };

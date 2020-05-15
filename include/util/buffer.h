@@ -19,7 +19,6 @@
 #pragma once
 
 #include <portable/macros.h>
-#include <portable/stdbool.h>
 #include <portable/system.h>
 
 BEGIN_DECLS

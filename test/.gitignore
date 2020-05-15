@@ -4,3 +4,4 @@
 *.la
 *.lo
 libutil.pc
+tmp/

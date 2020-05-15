@@ -18,12 +18,10 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <portable/stdbool.h>
 #include <portable/system.h>
 #include <sys/time.h>
 #include <time.h>
-
-#include "log.h"
+#include <util/log.h>
 
 #include "str.h"
 #include "util-private.h"
@@ -41,7 +39,11 @@ static struct logger {
     int   fd;    /* log file descriptor */
 } logger;
 
-int
+/* internal helper for logging to stdout/stderr */
+void _log_std(int fd, const char *msg, va_list args)
+    __attribute__((format(printf, 2, 0)));
+
+UTIL_EXPORT bool
 log_init(int level, char *filename)
 {
     struct logger *l = &logger;
@@ -55,26 +57,26 @@ log_init(int level, char *filename)
         if (l->fd < 0) {
             log_stderr("opening log file '%s' failed: %s", filename,
                        strerror(errno));
-            return -1;
+            return false;
         }
     }
 
-    return 0;
+    return true;
 }
 
-bool
+UTIL_EXPORT bool
 log_loggable(int level)
 {
     struct logger *l = &logger;
 
-    if (level > l->level) {
+    if (level <= l->level) {
         return true;
     }
 
     return false;
 }
 
-void
+UTIL_EXPORT void
 log_deinit(void)
 {
     struct logger *l = &logger;
@@ -86,8 +88,8 @@ log_deinit(void)
     close(l->fd);
 }
 
-void
-_log(const char *file, int line, const char *fmt, ...)
+UTIL_EXPORT void
+log_write(const char *file, int line, const char *msg, ...)
 {
     struct logger *l = &logger;
     int            len;
@@ -113,8 +115,8 @@ _log(const char *file, int line, const char *fmt, ...)
     len += scnprintf(buf + len, size - len, "%03ld", tv.tv_usec / 1000);
     len += scnprintf(buf + len, size - len, "] %s:%d ", file, line);
 
-    va_start(args, fmt);
-    len += vscnprintf(buf + len, size - len, fmt, args);
+    va_start(args, msg);
+    len += vscnprintf(buf + len, size - len, msg, args);
     va_end(args);
 
     buf[len++] = '\n';
@@ -128,29 +130,46 @@ _log(const char *file, int line, const char *fmt, ...)
 }
 
 void
-_log_stderr(const char *fmt, ...)
+_log_std(int fd, const char *msg, va_list args)
 {
     size_t  len;
     size_t  size;
     int     errno_save;
     char    buf[4 * LOG_MAX_LEN];
-    va_list args;
     ssize_t n;
 
     errno_save = errno;
     len = 0;                /* length of output buffer */
     size = 4 * LOG_MAX_LEN; /* size of output buffer */
 
-    va_start(args, fmt);
-    len += vscnprintf(buf, size, fmt, args);
-    va_end(args);
+    len += vscnprintf(buf, size, msg, args);
 
     buf[len++] = '\n';
 
-    n = xwrite(STDERR_FILENO, buf, len);
+    n = xwrite(fd, buf, len);
     if (n < 0) {
         log_nerror += 1;
     }
 
     errno = errno_save;
+}
+
+UTIL_EXPORT void
+log_stderr(const char *msg, ...)
+{
+    va_list args;
+
+    va_start(args, msg);
+    _log_std(STDERR_FILENO, msg, args);
+    va_end(args);
+}
+
+UTIL_EXPORT void
+log_stdout(const char *msg, ...)
+{
+    va_list args;
+
+    va_start(args, msg);
+    _log_std(STDOUT_FILENO, msg, args);
+    va_end(args);
 }

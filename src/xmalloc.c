@@ -17,11 +17,11 @@
  */
 
 #include <portable/system.h>
+#include <util/log.h>
 
 #include "xmalloc.h"
 
 #include "assert.h"
-#include "log.h"
 #include "util-private.h"
 
 void *
