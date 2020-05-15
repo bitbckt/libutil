@@ -1,4 +1,9 @@
 LIBUTIL_0 {
+global:
+        dbuf_init;
+        dbuf_get;
+        dbuf_put;
+        dbuf_deinit;
 local:
         *;
 };

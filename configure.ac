@@ -36,6 +36,9 @@ AC_PREFIX_DEFAULT([/usr])
 AC_PROG_SED
 AC_PROG_MKDIR_P
 
+AC_ARG_VAR([PATH_VALGRIND], [Path to valgrind for the test suite])
+AC_PATH_PROG([PATH_VALGRIND], [valgrind])
+
 AC_TYPE_UINT32_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
@@ -93,6 +96,8 @@ AC_MSG_RESULT([
         compiler:               ${CC}
         cflags:                 ${CFLAGS}
         ldflags:                ${LDFLAGS}
+
+        valgrind:               ${PATH_VALGRIND}
 
         debug:                  ${enable_debug}
         asserts:                ${enable_asserts}

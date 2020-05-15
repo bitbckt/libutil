@@ -35,7 +35,7 @@
 
 #include <stdarg.h> /* va_list */
 #include <stddef.h> /* size_t */
-#include <tests/tap/macros.h>
+#include <test/tap/macros.h>
 
 /*
  * Used for iterating through arrays.  ARRAY_SIZE returns the number of

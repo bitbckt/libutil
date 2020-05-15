@@ -60,12 +60,13 @@ LIBUTIL_CURRENT=0
 LIBUTIL_REVISION=0
 LIBUTIL_AGE=0
 
-pkginclude_HEADERS =
+pkginclude_HEADERS = include/util/buffer.h
 lib_LTLIBRARIES = src/libutil.la
 
 src_libutil_la_SOURCES =\
 	src/assert.h \
 	src/assert.c \
+	src/buffer.c \
 	src/log.h \
 	src/log.c \
 	src/str.h \
@@ -89,14 +90,32 @@ EXTRA_DIST += src/libutil.pc.in
 CLEANFILES += src/libutil.pc
 
 # Everything below is for the test suite
-check_PROGRAMS = test/runtests
-test_runtests_CPPFLAGS = -DC_TAP_SOURCE='"$(abs_top_srcdir)/tests"' \
-	-DC_TAP_BUILD='"$(abs_top_builddir)/tests"'
+check_PROGRAMS =\
+	test/runtests \
+	test/dbuf-t
+
+test_runtests_CPPFLAGS = -DC_TAP_SOURCE='"$(abs_top_srcdir)/test"' \
+	-DC_TAP_BUILD='"$(abs_top_builddir)/test"'
 check_LIBRARIES = test/tap/libtap.a
 test_tap_libtap_a_CPPFLAGS = -I$(abs_top_srcdir)/test
-test_tap_libtap_a_SOURCES = test/tap/basic.c test/tap/basic.h \
+test_tap_libtap_a_SOURCES =\
+	test/tap/basic.c \
+	test/tap/basic.h \
 	test/tap/macros.h
+
+test_dbuf_t_SOURCES = test/dbuf-t.c
+test_dbuf_t_LDADD = test/tap/libtap.a src/libutil.la
 
 check-local: $(check_PROGRAMS)
 	cd test && ./runtests -l $(abs_top_srcdir)/test/TESTS
 
+VALGRIND_COMMAND = $(PATH_VALGRIND) --leak-check=full			\
+	--trace-children=yes --trace-children-skip=/bin/sh		\
+	--log-file=$(abs_top_builddir)/tests/tmp/valgrind/log.%p
+
+check-valgrind: $(check_PROGRAMS)
+	rm -rf $(abs_top_builddir)/test/tmp
+	mkdir $(abs_top_builddir)/test/tmp
+	mkdir $(abs_top_builddir)/test/tmp/valgrind
+	C_TAP_VALGRIND="$(VALGRIND_COMMAND)" test/runtests \
+	    -l '$(abs_top_srcdir)/test/TESTS'

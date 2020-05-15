@@ -22,6 +22,8 @@
 
 BEGIN_DECLS
 
+#define UTIL_EXPORT __attribute__ ((visibility("default")))
+
 #define UNUSED(x) ((void)x)
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
