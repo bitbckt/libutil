@@ -89,7 +89,8 @@ nodist_pkgconfig_DATA = src/libutil.pc
 EXTRA_DIST += src/libutil.pc.in
 CLEANFILES += src/libutil.pc
 
-# Apply linting rules using clang-tidy
+# Apply linting rules using clang-tidy, if available
+if HAVE_CLANG_TIDY
 tidy:
 	${PATH_CLANG_TIDY} ${top_srcdir}/src/*.c \
 		-- \
@@ -97,11 +98,14 @@ tidy:
 		-isystem ${top_srcdir} \
 		-isystem ${top_srcdir}/include \
 		-iquote ${top_srcdir}/src
+endif
 
-# Apply style rules using clang-format
+# Apply style rules using clang-format, if available
+if HAVE_CLANG_FORMAT
 style:
 	find src include -name '*.[ch]' -print | xargs ${PATH_CLANG_FORMAT} -style=file -i
 	find test -name '*-t.[ch]' -print | xargs ${PATH_CLANG_FORMAT} -style=file -i
+endif
 
 # Everything below is for the test suite
 check_PROGRAMS =\
@@ -123,6 +127,7 @@ test_dbuf_t_LDADD = test/tap/libtap.a src/libutil.la
 check-local: $(check_PROGRAMS)
 	cd test && ./runtests -l $(abs_top_srcdir)/test/TESTS
 
+if HAVE_VALGRIND
 VALGRIND_COMMAND = $(PATH_VALGRIND) --leak-check=full			\
 	--trace-children=yes --trace-children-skip=/bin/sh		\
 	--log-file=$(abs_top_builddir)/tests/tmp/valgrind/log.%p
@@ -133,3 +138,4 @@ check-valgrind: $(check_PROGRAMS)
 	mkdir $(abs_top_builddir)/test/tmp/valgrind
 	C_TAP_VALGRIND="$(VALGRIND_COMMAND)" test/runtests \
 	    -l '$(abs_top_srcdir)/test/TESTS'
+endif

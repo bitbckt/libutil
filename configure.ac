@@ -38,12 +38,15 @@ AC_PROG_MKDIR_P
 
 AC_ARG_VAR([PATH_VALGRIND], [Path to valgrind for the test suite])
 AC_PATH_PROG([PATH_VALGRIND], [valgrind])
+AM_CONDITIONAL([HAVE_VALGRIND], [test "x$PATH_VALGRIND" != "x"])
 
 AC_ARG_VAR([PATH_CLANG_FORMAT], [Path to clang-format])
 AC_PATH_PROG([PATH_CLANG_FORMAT], [clang-format])
+AM_CONDITIONAL([HAVE_CLANG_FORMAT], [test "x$PATH_CLANG_FORMAT" != "x"])
 
 AC_ARG_VAR([PATH_CLANG_TIDY], [Path to clang-tidy])
 AC_PATH_PROG([PATH_CLANG_TIDY], [clang-tidy])
+AM_CONDITIONAL([HAVE_CLANG_TIDY], [test "x$PATH_CLANG_TIDY" != "x"])
 
 AC_TYPE_UINT32_T
 AC_TYPE_SIZE_T
