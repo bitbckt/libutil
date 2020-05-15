@@ -34,9 +34,9 @@
 static uint32_t log_nerror = 0;
 
 static struct logger {
-    char *name;  /* log file name */
-    int   level; /* log level */
-    int   fd;    /* log file descriptor */
+    char *      name;  /* log file name */
+    log_level_t level; /* log level */
+    int         fd;    /* log file descriptor */
 } logger;
 
 /* internal helper for logging to stdout/stderr */
@@ -44,11 +44,11 @@ void _log_std(int fd, const char *msg, va_list args)
     __attribute__((format(printf, 2, 0)));
 
 UTIL_EXPORT bool
-log_init(int level, char *filename)
+log_init(log_level_t level, char *filename)
 {
     struct logger *l = &logger;
 
-    l->level = MAX(LOG_EMERG, MIN(level, LOG_DEBUG));
+    l->level = level;
     l->name = filename;
     if (filename == NULL || !strnlen(filename, LOG_MAX_FILENAME)) {
         l->fd = STDERR_FILENO;
@@ -65,7 +65,7 @@ log_init(int level, char *filename)
 }
 
 UTIL_EXPORT bool
-log_loggable(int level)
+log_loggable(log_level_t level)
 {
     struct logger *l = &logger;
 

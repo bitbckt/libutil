@@ -23,14 +23,16 @@
 
 BEGIN_DECLS
 
-#define LOG_EMERG  0 /* System is unusable */
-#define LOG_ALERT  1 /* Action must be taken immediately */
-#define LOG_CRIT   2 /* Critical conditions */
-#define LOG_ERR    3 /* Error conditions */
-#define LOG_WARN   4 /* Warning conditions */
-#define LOG_NOTICE 5 /* Normal but significant condition */
-#define LOG_INFO   6 /* Informational */
-#define LOG_DEBUG  7 /* Debug-level messages */
+typedef enum {
+    LOG_EMERG,  /* System is unusable */
+    LOG_ALERT,  /* Action must be taken immediately */
+    LOG_CRIT,   /* Critical conditions */
+    LOG_ERR,    /* Error conditions */
+    LOG_WARN,   /* Warning conditions */
+    LOG_NOTICE, /* Normal but significant condition */
+    LOG_INFO,   /* Informational */
+    LOG_DEBUG   /* Debug-level messages */
+} log_level_t;
 
 /* max length of log messages */
 #define LOG_MAX_LEN 256
@@ -54,13 +56,13 @@ BEGIN_DECLS
  * false if an error occurred. In case of an error, a log message will
  * be output to stderr.
  */
-bool log_init(int level, char *filename);
+bool log_init(log_level_t level, char *filename);
 
 /**
  * Returns true of the logging module is currently configured to emit
  * messages at the provided level, false otherwise.
  */
-bool log_loggable(int level);
+bool log_loggable(log_level_t level);
 
 /**
  * Output a message via the logging module with a newline appended.
