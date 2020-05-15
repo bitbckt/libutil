@@ -5,3 +5,6 @@
 *.lo
 libutil.pc
 tmp/
+runtests
+dbuf-t
+log-t
