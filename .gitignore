@@ -1,4 +1,5 @@
 *.o
+*.a
 .deps/
 .libs/
 Makefile
@@ -10,3 +11,5 @@ Makefile.in
 /configure
 /libtool
 /stamp-h1
+/test/dbuf-t
+/test/runtests
