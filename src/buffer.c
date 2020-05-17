@@ -117,7 +117,7 @@ dbuf_put(struct dbuf *dbuf, uint8_t byte)
     }
 
     *dbuf->last = byte;
-    dbuf->last++;
+    ++dbuf->last;
 
     return true;
 }
@@ -149,7 +149,7 @@ dbuf_get(struct dbuf *dbuf, uint8_t *byte)
         }
 
         *byte = *dbuf->pos;
-        dbuf->pos++;
+        ++dbuf->pos;
 
         return true;
     }
