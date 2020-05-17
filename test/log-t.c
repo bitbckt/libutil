@@ -64,7 +64,7 @@ static void
 test_output(void)
 {
     char *dir = test_tmpdir();
-    char *file = malloc(strlen(dir) + 4); /* dir + / + "log" + NUL */
+    char *file = malloc(strlen(dir) + 5); /* dir + / + "log" + NUL */
 
     strcpy(file, dir);
     strcat(file, "/log");
