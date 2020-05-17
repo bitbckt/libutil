@@ -19,11 +19,30 @@
 #pragma once
 
 #include <portable/macros.h>
+#include <portable/system.h>
 
 BEGIN_DECLS
 
-#define UTIL_EXPORT __attribute__((visibility("default")))
+#define MAX(_x, _y) (((_x) > (_y)) ? (_x) : (_y))
+#define MIN(_x, _y) (((_x) < (_y)) ? (_x) : (_y))
+#define CLAMP(_x, _max, _min) (MIN((_max), MAX((_x), (_min))))
 
-#define UNUSED(x) ((void)(x))
+/**
+ * Saturated addition of two 16-bit signed integers.
+ */
+static int16_t
+sadd16(int16_t a, int16_t b)
+{
+    return CLAMP((int32_t)a + b, INT16_MAX, INT16_MIN);
+}
+
+/**
+ * Saturated addition of two 32-bit signed integers.
+ */
+static int32_t
+sadd32(int32_t a, int32_t b)
+{
+    return CLAMP((int64_t)a + b, INT32_MAX, INT32_MIN);
+}
 
 END_DECLS

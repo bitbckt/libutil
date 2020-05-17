@@ -10,6 +10,9 @@ global:
         log_stderr;
         log_stdout;
         log_write;
+        pid_init;
+        pid_deinit;
+        pid_update;
 local:
         *;
 };

@@ -8,3 +8,4 @@ tmp/
 runtests
 dbuf-t
 log-t
+pid-t

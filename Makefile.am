@@ -62,7 +62,8 @@ LIBUTIL_AGE=0
 
 pkginclude_HEADERS =\
 	include/util/buffer.h \
-	include/util/log.h
+	include/util/log.h \
+	include/util/pid.h
 lib_LTLIBRARIES = src/libutil.la
 
 src_libutil_la_SOURCES =\
@@ -70,6 +71,7 @@ src_libutil_la_SOURCES =\
 	src/assert.c \
 	src/buffer.c \
 	src/log.c \
+	src/pid.c \
 	src/str.h \
 	src/str.c \
 	src/util-private.h \
@@ -112,7 +114,8 @@ endif
 check_PROGRAMS =\
 	test/runtests \
 	test/dbuf-t \
-	test/log-t
+	test/log-t \
+	test/pid-t
 
 test_runtests_CPPFLAGS = -DC_TAP_SOURCE='"$(abs_top_srcdir)/test"' \
 	-DC_TAP_BUILD='"$(abs_top_builddir)/test"'
@@ -132,6 +135,9 @@ test_dbuf_t_LDADD = test/tap/libtap.a src/libutil.la
 
 test_log_t_SOURCES = test/log-t.c
 test_log_t_LDADD = test/tap/libtap.a src/libutil.la
+
+test_pid_t_SOURCES = test/pid-t.c
+test_pid_t_LDADD = test/tap/libtap.a src/libutil.la
 
 check-local: $(check_PROGRAMS)
 	cd test && ./runtests -l $(abs_top_srcdir)/test/TESTS

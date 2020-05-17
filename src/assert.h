@@ -54,6 +54,6 @@ void stacktrace(int skip);
 
 #        define NOT_REACHED() ASSERT(0)
 #    endif /* ASSERT_PANIC */
-#endif /* NDEBUG */
+#endif     /* NDEBUG */
 
 END_DECLS
