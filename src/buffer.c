@@ -76,9 +76,6 @@ struct dbuf {
     uint8_t *write; /* start of write buffer */
 };
 
-/* swaps read and write buffers */
-void _dbuf_swap(struct dbuf *dbuf);
-
 UTIL_EXPORT struct dbuf *
 dbuf_init(size_t size)
 {
@@ -122,7 +119,7 @@ dbuf_put(struct dbuf *dbuf, uint8_t byte)
     return true;
 }
 
-void
+static void
 _dbuf_swap(struct dbuf *dbuf)
 {
     uint8_t *tmp = dbuf->read;
