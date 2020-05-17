@@ -138,8 +138,8 @@ check-local: $(check_PROGRAMS)
 
 if HAVE_VALGRIND
 VALGRIND_COMMAND = $(PATH_VALGRIND) --leak-check=full			\
-	--trace-children=yes --trace-children-skip=/bin/sh		\
-	--log-file=$(abs_top_builddir)/tests/tmp/valgrind/log.%p
+	--trace-children=yes --trace-children-skip=/bin/bash		\
+	--log-file=$(abs_top_builddir)/test/tmp/valgrind/log.%p
 
 check-valgrind: $(check_PROGRAMS)
 	rm -rf $(abs_top_builddir)/test/tmp
