@@ -43,7 +43,6 @@ void _xfree(void *ptr, const char *name, int line) __attribute__((nonnull));
 #define xfree(_p)                       \
     do {                                \
         _xfree(_p, __FILE__, __LINE__); \
-        (_p) = NULL;                    \
     } while (0)
 
 END_DECLS
