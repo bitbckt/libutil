@@ -1,2 +1,2 @@
-dbuf
-log
+dbuf    valgrind
+log     valgrind
