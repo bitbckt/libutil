@@ -90,7 +90,6 @@ _xfree(void *ptr, const char *name, int line)
     UNUSED(line);
 #endif
 
-    ASSERT(ptr != NULL);
     log_debug(LOG_DEBUG, "free(%p) @ %s:%d", ptr, name, line);
     free(ptr);
 }

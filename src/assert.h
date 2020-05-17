@@ -31,7 +31,10 @@ void stacktrace(int skip);
  * Wrappers for defining custom assert based on whether the macro
  * ASSERT_PANIC was defined at the moment ASSERT was called.
  */
-#ifdef ASSERTS
+#ifdef NDEBUG
+#    define ASSERT(_x)
+#    define NOT_REACHED()
+#else /* !NDEBUG */
 #    ifdef ASSERT_PANIC
 #        define ASSERT(_x)                                  \
             do {                                            \
@@ -51,9 +54,6 @@ void stacktrace(int skip);
 
 #        define NOT_REACHED() ASSERT(0)
 #    endif /* ASSERT_PANIC */
-#else      /* !ASSERTS */
-#    define ASSERT(_x)
-#    define NOT_REACHED()
-#endif /* ASSERTS */
+#endif /* NDEBUG */
 
 END_DECLS

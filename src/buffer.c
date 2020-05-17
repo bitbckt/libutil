@@ -22,7 +22,7 @@
 #include "util-private.h"
 #include "xmalloc.h"
 
-#ifdef ASSERTS
+#if !defined NDEBUG
 #    define DBUF_MAGIC 0xdeadbeef
 #endif
 
@@ -66,7 +66,7 @@
  *              dbuf->limit
  */
 struct dbuf {
-#ifdef ASSERTS
+#if !defined NDEBUG
     uint32_t magic; /* dbuf magic (const) */
 #endif
     uint8_t *pos;   /* read marker */
@@ -89,7 +89,7 @@ dbuf_init(size_t size)
 
     dbuf = (struct dbuf *)(buf + size * 2);
 
-#ifdef ASSERTS
+#if !defined NDEBUG
     dbuf->magic = DBUF_MAGIC;
 #endif
 
