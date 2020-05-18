@@ -25,12 +25,12 @@
 #include "xmalloc.h"
 
 struct pid_t {
-    int32_t kp;       /* proportional gain (const) */
-    int32_t ki;       /* integral gain (const) */
-    int32_t kd;       /* derivative gain (const) */
-    int16_t sp;       /* sp from the previous iteration */
-    int16_t error;    /* error from the previous iteration */
-    int32_t integral; /* accumulated error */
+    int_fast32_t kp;       /* proportional gain (const) */
+    int_fast32_t ki;       /* integral gain (const) */
+    int_fast32_t kd;       /* derivative gain (const) */
+    int_fast16_t sp;       /* sp from the previous iteration */
+    int_fast16_t error;    /* error from the previous iteration */
+    int_fast32_t integral; /* accumulated error */
 };
 
 UTIL_EXPORT struct pid_t *
@@ -48,8 +48,9 @@ pid_init(float kp, float ki, float kd, float hz)
     pid->kp = (int32_t)(kp * (UINT8_MAX + 1));
     pid->ki = (int32_t)((ki * hz) * (UINT8_MAX + 1));
     pid->kd = (int32_t)((kd / hz) * (UINT8_MAX + 1));
-    pid->integral = 0;
-    pid->error = 0;
+    pid->sp = INT16_C(0);
+    pid->integral = INT32_C(0);
+    pid->error = INT32_C(0);
 
     return pid;
 }
