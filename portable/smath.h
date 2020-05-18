@@ -30,19 +30,19 @@ BEGIN_DECLS
 /**
  * Saturated addition of two 16-bit signed integers.
  */
-static int16_t
-sadd16(int16_t a, int16_t b)
+static int_fast16_t
+sadd16(int_fast16_t a, int_fast16_t b)
 {
-    return CLAMP((int32_t)a + b, INT16_MAX, INT16_MIN);
+    return CLAMP((int_fast32_t)a + b, INT16_MAX, INT16_MIN);
 }
 
 /**
  * Saturated addition of two 32-bit signed integers.
  */
-static int32_t
-sadd32(int32_t a, int32_t b)
+static int_fast32_t
+sadd32(int_fast32_t a, int_fast32_t b)
 {
-    return CLAMP((int64_t)a + b, INT32_MAX, INT32_MIN);
+    return CLAMP((int_fast64_t)a + b, INT32_MAX, INT32_MIN);
 }
 
 END_DECLS
