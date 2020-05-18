@@ -83,17 +83,8 @@ pid_update(struct pid_t *pid, int16_t pv, int16_t sp)
 
     process = control + (pid->ki * pid->integral) + (pid->kd * deriv);
 
-    /* remove scaling factor */
-    process = process / UINT8_MAX;
-
-    /* clamp output to i16 */
-    if (process > INT16_MAX) {
-        process = INT16_MAX;
-    } else if (process < INT16_MIN) {
-        process = INT16_MIN;
-    }
-
-    return process;
+    /* remove scaling factor and clamp output to i16 */
+    return CLAMP(process / UINT8_MAX, INT16_MAX, INT16_MIN);
 }
 
 UTIL_EXPORT void
