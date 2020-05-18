@@ -41,8 +41,8 @@ struct pid_t;
 struct pid_t *pid_init(float kp, float ki, float kd, float hz);
 
 /**
- * Update a PID controller with a new process variable (PV), setpoint
- * (SP), and time delta from the previous PV sample.
+ * Update a PID controller with a new process variable (PV), and
+ * setpoint (SP).
  *
  * Returns a correction factor to be applied to the process under
  * control.
