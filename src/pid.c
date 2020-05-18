@@ -60,12 +60,9 @@ pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp)
 {
     int_fast16_t error;
     int_fast16_t deriv;
-    int_fast32_t control;
     int_fast64_t process;
 
     error = sp - pv;
-
-    control = pid->kp * error;
 
     /*
      * reset accumulated error when on target to prevent integral
@@ -82,7 +79,7 @@ pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp)
     pid->error = error;
     pid->sp = sp;
 
-    process = control + (pid->ki * pid->integral) + (pid->kd * deriv);
+    process = (pid->kp * error) + (pid->ki * pid->integral) + (pid->kd * deriv);
 
     /* remove scaling factor and clamp output to i16 */
     return CLAMP(process / UINT8_MAX, INT16_MAX, INT16_MIN);
