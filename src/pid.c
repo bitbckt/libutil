@@ -54,13 +54,13 @@ pid_init(float kp, float ki, float kd, float hz)
     return pid;
 }
 
-UTIL_EXPORT int16_t
-pid_update(struct pid_t *pid, int16_t pv, int16_t sp)
+UTIL_EXPORT int_fast16_t
+pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp)
 {
-    int16_t error;
-    int16_t deriv;
-    int32_t control;
-    int64_t process;
+    int_fast16_t error;
+    int_fast16_t deriv;
+    int_fast32_t control;
+    int_fast64_t process;
 
     error = sp - pv;
 

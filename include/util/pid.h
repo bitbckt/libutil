@@ -47,7 +47,7 @@ struct pid_t *pid_init(float kp, float ki, float kd, float hz);
  * Returns a correction factor to be applied to the process under
  * control.
  */
-int16_t pid_update(struct pid_t *pid, int16_t pv, int16_t sp);
+int_fast16_t pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp);
 
 /**
  * Release resources allocated in pid_init().
