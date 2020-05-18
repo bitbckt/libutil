@@ -36,7 +36,7 @@ test_bump(void)
     cv = 0;
     sp = 10;
 
-    for (i = 0; i < 60; i++) {
+    for (i = 0; i < 45; i++) {
         mv = pid_update(pid, cv, sp);
 
         cv += mv;
@@ -49,7 +49,7 @@ test_bump(void)
     /* step to 100 */
     sp = 100;
 
-    for (i = 0; i < 180; i++) {
+    for (i = 0; i < 30; i++) {
         mv = pid_update(pid, cv, sp);
 
         cv += mv;
@@ -62,7 +62,7 @@ test_bump(void)
     /* step back to 10 */
     sp = 10;
 
-    for (i = 0; i < 90; i++) {
+    for (i = 0; i < 15; i++) {
         mv = pid_update(pid, cv, sp);
 
         cv += mv;

@@ -66,7 +66,15 @@ pid_update(struct pid_t *pid, int16_t pv, int16_t sp)
 
     control = pid->kp * error;
 
-    pid->integral = sadd32(pid->integral, error);
+    /*
+     * reset accumulated error when on target to prevent integral
+     * windup
+     */
+    if (error == 0) {
+        pid->integral = 0;
+    } else {
+        pid->integral = sadd32(pid->integral, error);
+    }
 
     deriv = sadd16(error - pid->error, -(sp - pid->sp));
 
