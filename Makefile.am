@@ -61,6 +61,7 @@ LIBUTIL_REVISION=0
 LIBUTIL_AGE=0
 
 pkginclude_HEADERS =\
+	include/util/at45.h \
 	include/util/buffer.h \
 	include/util/log.h \
 	include/util/pid.h
@@ -69,6 +70,7 @@ lib_LTLIBRARIES = src/libutil.la
 src_libutil_la_SOURCES =\
 	src/assert.h \
 	src/assert.c \
+	src/at45.c \
 	src/buffer.c \
 	src/log.c \
 	src/pid.c \

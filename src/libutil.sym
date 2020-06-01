@@ -1,5 +1,30 @@
 LIBUTIL_0 {
 global:
+        at45_init;
+        at45_compare;
+        at45_copy;
+        at45_cr;
+        at45_deinit;
+        at45_deviceid;
+        at45_epe;
+        at45_eraseblock;
+        at45_erasechip;
+        at45_erasepage;
+        at45_erasesector;
+        at45_pagesize;
+        at45_pagesize_read;
+        at45_read;
+        at45_readbuf;
+        at45_readbuf_lf;
+        at45_readpage;
+        at45_ready;
+        at45_read_hf;
+        at45_read_lf;
+        at45_read_lp;
+        at45_write;
+        at45_writeback;
+        at45_writebuf;
+        at45_write_erase;
         dbuf_init;
         dbuf_get;
         dbuf_put;
