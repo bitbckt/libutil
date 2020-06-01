@@ -79,7 +79,8 @@ pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp)
     pid->error = error;
     pid->sp = sp;
 
-    process = (pid->kp * error) + (pid->ki * pid->integral) + (pid->kd * deriv);
+    process =
+        (pid->kp * error) + (pid->ki * pid->integral) + (pid->kd * deriv);
 
     /* remove scaling factor and clamp output to i16 */
     return CLAMP(process / UINT8_MAX, INT16_MAX, INT16_MIN);
