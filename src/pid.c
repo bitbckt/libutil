@@ -17,6 +17,8 @@
  */
 
 #include <errno.h>
+#include <float.h>
+#include <math.h>
 #include <portable/smath.h>
 #include <util/pid.h>
 
@@ -37,7 +39,11 @@ pid_init(struct pid_t *pid, float kp, float ki, float kd, float hz)
         return -EINVAL;
     }
 
-    if (hz <= 0) {
+    /*
+     * Hz may be any normal, positive value. FLT_TRUE_MIN is
+     * preferable, but is not universally available.
+     */
+    if (hz < FLT_MIN || !isnormal(hz)) {
         return -EINVAL;
     }
 

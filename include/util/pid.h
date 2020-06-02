@@ -45,7 +45,7 @@ struct pid_t {
  *
  * All gain parameters must be positive values between [0.0, 255.0).
  *
- * Frequency must be a positive, non-zero value.
+ * Frequency must be a normal, positive value.
  *
  * Returns 0 if pid has been successfully initialized, or a negative
  * errno if not.
