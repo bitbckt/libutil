@@ -24,13 +24,15 @@
 static void
 test_bump(void)
 {
-    struct pid_t *pid;
+    struct pid_t *pid = bmalloc(sizeof(struct pid_t));
     int           i;
     int16_t       cv;
     int16_t       mv;
     int16_t       sp;
+    int           err;
 
-    pid = pid_init(0.1, 0.01, 0.1, 1.0);
+    err = pid_init(pid, 0.1, 0.01, 0.1, 1.0);
+    is_int(0, err, "pid init %i", err);
 
     /* start @ 0, step to 10 */
     cv = 0;
@@ -78,7 +80,7 @@ test_bump(void)
 int
 main(void)
 {
-    plan(6);
+    plan(7);
 
     test_bump();
 

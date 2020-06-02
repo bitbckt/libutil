@@ -16,35 +16,30 @@
  * limitations under the License.
  */
 
+#include <errno.h>
 #include <portable/smath.h>
 #include <util/log.h>
 #include <util/pid.h>
 
-#include "assert.h"
 #include "util-private.h"
-#include "xmalloc.h"
 
-struct pid_t {
-    int_fast32_t kp;       /* proportional gain (const) */
-    int_fast32_t ki;       /* integral gain (const) */
-    int_fast32_t kd;       /* derivative gain (const) */
-    int_fast16_t sp;       /* sp from the previous iteration */
-    int_fast16_t error;    /* error from the previous iteration */
-    int_fast32_t integral; /* accumulated error */
-};
-
-UTIL_EXPORT struct pid_t *
-pid_init(float kp, float ki, float kd, float hz)
+UTIL_EXPORT int
+pid_init(struct pid_t *pid, float kp, float ki, float kd, float hz)
 {
-    struct pid_t *pid;
+    if (kp < 0 || kp >= UINT8_MAX) {
+        return -EINVAL;
+    }
 
-    ASSERT(kp > 0 && kp < UINT8_MAX);
-    ASSERT(ki > 0 && ki < UINT8_MAX);
-    ASSERT(kd > 0 && kd < UINT8_MAX);
+    if (ki < 0 || ki >= UINT8_MAX) {
+        return -EINVAL;
+    }
 
-    pid = xmalloc(sizeof(struct pid_t));
-    if (pid == NULL) {
-        return NULL;
+    if (kd < 0 || kd >= UINT8_MAX) {
+        return -EINVAL;
+    }
+
+    if (hz <= 0) {
+        return -EINVAL;
     }
 
     /* scale gains to avoid float computation in pid_update() */
@@ -55,7 +50,7 @@ pid_init(float kp, float ki, float kd, float hz)
     pid->integral = INT32_C(0);
     pid->error = INT32_C(0);
 
-    return pid;
+    return 0;
 }
 
 UTIL_EXPORT int_fast16_t
@@ -92,5 +87,5 @@ pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp)
 UTIL_EXPORT void
 pid_deinit(struct pid_t *pid)
 {
-    xfree(pid);
+    UNUSED(pid);
 }

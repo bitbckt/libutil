@@ -30,15 +30,28 @@ BEGIN_DECLS
  * difference between a desired setpoint (SP) and a measured process
  * variable (PV) and returns a correction factor.
  */
-struct pid_t;
+struct pid_t {
+    int_fast32_t kp;       /* proportional gain (const) */
+    int_fast32_t ki;       /* integral gain (const) */
+    int_fast32_t kd;       /* derivative gain (const) */
+    int_fast16_t sp;       /* sp from the previous iteration */
+    int_fast16_t error;    /* error from the previous iteration */
+    int_fast32_t integral; /* accumulated error */
+};
 
 /**
  * Initialize a PID controller with the given gains and operating
  * frequency in Hz.
  *
  * All gain parameters must be positive values between [0.0, 255.0).
+ *
+ * Frequency must be a positive, non-zero value.
+ *
+ * Returns 0 if pid has been successfully initialized, or a negative
+ * errno if not.
  */
-struct pid_t *pid_init(float kp, float ki, float kd, float hz);
+int pid_init(struct pid_t *pid, float kp, float ki, float kd, float hz)
+    __attribute__((nonnull));
 
 /**
  * Update a PID controller with a new process variable (PV), and
@@ -47,11 +60,12 @@ struct pid_t *pid_init(float kp, float ki, float kd, float hz);
  * Returns a correction factor to be applied to the process under
  * control.
  */
-int_fast16_t pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp);
+int_fast16_t pid_update(struct pid_t *pid, int_fast16_t pv, int_fast16_t sp)
+    __attribute__((nonnull));
 
 /**
  * Release resources allocated in pid_init().
  */
-void pid_deinit(struct pid_t *pid);
+void pid_deinit(struct pid_t *pid) __attribute__((nonnull));
 
 END_DECLS
