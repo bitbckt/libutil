@@ -18,7 +18,6 @@
 
 #include <errno.h>
 #include <portable/smath.h>
-#include <util/log.h>
 #include <util/pid.h>
 
 #include "util-private.h"
