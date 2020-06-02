@@ -85,6 +85,7 @@ EXTRA_DIST += src/libutil.sym
 src_libutil_la_LDFLAGS = $(AM_LDFLAGS) \
 	-version-info $(LIBUTIL_CURRENT):$(LIBUTIL_REVISION):$(LIBUTIL_AGE) \
 	-Wl,--version-script=$(top_srcdir)/src/libutil.sym
+src_libutil_la_LIBADD = -lm
 src_libutil_la_DEPENDENCIES = ${top_srcdir}/src/libutil.sym
 
 pkgconfigdir = $(libdir)/pkgconfig

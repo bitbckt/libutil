@@ -75,11 +75,16 @@ AC_SUBST([my_CFLAGS])
 
 AC_HEADER_STDBOOL
 AC_CHECK_HEADERS([errno.h stdarg.h stddef.h stdio.h stdlib.h string.h sys/types.h unistd.h])
+AC_CHECK_HEADERS([math.h])
 AC_CHECK_HEADERS([inttypes.h stdint.h])
 AC_CHECK_HEADERS([sys/time.h time.h])
 AC_CHECK_HEADERS([execinfo.h], [
         AC_DEFINE(HAVE_BACKTRACE, [1], [backtraces available])], {})
 AC_CHECK_DECLS([snprintf vsnprintf])
+
+AC_SEARCH_LIBS([cos], [m], [], [
+        AC_MSG_ERROR([unable to find the cos() function])])
+
 AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_FILES([
         Makefile
