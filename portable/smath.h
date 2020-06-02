@@ -25,7 +25,7 @@ BEGIN_DECLS
 
 #define MAX(_x, _y) (((_x) > (_y)) ? (_x) : (_y))
 #define MIN(_x, _y) (((_x) < (_y)) ? (_x) : (_y))
-#define CLAMP(_x, _max, _min) (MIN((_max), MAX((_x), (_min))))
+#define CLAMP(_x, _min, _max) (MIN((_max), MAX((_x), (_min))))
 
 /**
  * Saturated addition of two 16-bit signed integers.
@@ -33,7 +33,7 @@ BEGIN_DECLS
 static int_fast16_t
 sadd16(int_fast16_t a, int_fast16_t b)
 {
-    return CLAMP((int_fast32_t)a + b, INT16_MAX, INT16_MIN);
+    return CLAMP((int_fast32_t)a + b, INT16_MIN, INT16_MAX);
 }
 
 /**
@@ -42,7 +42,7 @@ sadd16(int_fast16_t a, int_fast16_t b)
 static int_fast32_t
 sadd32(int_fast32_t a, int_fast32_t b)
 {
-    return CLAMP((int_fast64_t)a + b, INT32_MAX, INT32_MIN);
+    return CLAMP((int_fast64_t)a + b, INT32_MIN, INT32_MAX);
 }
 
 END_DECLS
