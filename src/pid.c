@@ -46,8 +46,8 @@ pid_init(struct pid_t *pid, float kp, float ki, float kd, float hz)
     pid->ki = (int32_t)((ki * hz) * (UINT8_MAX + 1));
     pid->kd = (int32_t)((kd / hz) * (UINT8_MAX + 1));
     pid->sp = INT16_C(0);
+    pid->error = INT16_C(0);
     pid->integral = INT32_C(0);
-    pid->error = INT32_C(0);
 
     return 0;
 }
