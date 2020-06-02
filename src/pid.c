@@ -43,6 +43,9 @@ pid_init(float kp, float ki, float kd, float hz)
     ASSERT(kd > 0 && kd < UINT8_MAX);
 
     pid = xmalloc(sizeof(struct pid_t));
+    if (pid == NULL) {
+        return NULL;
+    }
 
     /* scale gains to avoid float computation in pid_update() */
     pid->kp = (int32_t)(kp * (UINT8_MAX + 1));
