@@ -120,7 +120,17 @@ check_PROGRAMS =\
 
 test_runtests_CPPFLAGS = -DC_TAP_SOURCE='"$(abs_top_srcdir)/test"' \
 	-DC_TAP_BUILD='"$(abs_top_builddir)/test"'
-check_LIBRARIES = test/tap/libtap.a
+
+check_LIBRARIES =\
+	test/aardvark/libaardvark.a \
+	test/tap/libtap.a
+
+# Support for TotalPhase Aardvark I2C/SPI host adapter in tests
+test_aardvark_libaardvark_a_CFLAGS = -std=c99 -Dlinux
+test_aardvark_libaardvark_a_SOURCES =\
+	test/aardvark/aardvark.h \
+	test/aardvark/aardvark.c
+
 test_tap_libtap_a_CPPFLAGS = -I$(abs_top_srcdir)/test
 test_tap_libtap_a_SOURCES =\
 	test/tap/basic.c \
